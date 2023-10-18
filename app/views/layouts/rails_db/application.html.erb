@@ -11,7 +11,9 @@
 </head>
 
 <body>
-  <%= display_flash_messages %>
+  <div id="flash_messages">
+    <%= display_flash_messages %>
+  </div>
   <% if RailsDb.enabled %>
     <%= render 'rails_db/shared/header' %>
     <div class="row">

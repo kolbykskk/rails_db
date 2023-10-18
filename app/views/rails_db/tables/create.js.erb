@@ -1,3 +1,12 @@
+<% flash.each do |type, message| %>
+    $('#flash_messages').append(`
+        <div class="alert-box <%= type %>">
+            <%= j message %>
+            <a href="#" class="close">&times;</a>
+        </div>
+    `);
+<% end %>
+
 $('#main_content').html("<%= j(render 'data') %>");
 
 $('#system_modal').foundation('reveal', 'close');
