@@ -64,10 +64,11 @@ module RailsDb
       build_search
 
       unless RailsDb.sandbox
-        if @table.delete(params[:pk_id])
+        begin
+          @table.delete(params[:pk_id])
           flash[:success] = 'Record has been deleted successfully.'
-        else
-          flash[:error] = 'There was an error deleting the record.'
+        rescue => e
+          flash.now[:error] = "There was an error deleting the record: #{e.message}"
         end
       end
 
