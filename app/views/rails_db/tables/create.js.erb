@@ -7,6 +7,8 @@
     `);
 <% end %>
 
+<% flash.clear %>
+
 $('#main_content').html("<%= j(render 'data') %>");
 
 $('#system_modal').foundation('reveal', 'close');
