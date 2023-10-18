@@ -16,18 +16,20 @@ module RailsDb
     end
 
     def create
+      flasha = {}
+
       unless RailsDb.sandbox
         @record = model.new(record_attributes)
         if @record.save
-          flash[:success] = 'Record has been created successfully.'
+          flasha[:success] = 'Record has been created successfully.'
         else
-          flash[:error] = 'There was an error creating the record.'
+          flasha[:error] = 'There was an error creating the record.'
         end
       end
       
       build_search
       respond_to do |page|
-        page.html { redirect_to action: :data, table_id: params[:table_id] }
+        page.html { redirect_to action: :data, table_id: params[:table_id], flash: flasha }
         page.js {}
       end
     end
@@ -63,17 +65,19 @@ module RailsDb
     def destroy
       build_search
 
+      flasha = {}
+
       unless RailsDb.sandbox
         begin
           @table.delete(params[:pk_id])
-          flash[:success] = 'Record has been deleted successfully.'
+          flasha[:success] = 'Record has been deleted successfully.'
         rescue => e
-          flash.now[:error] = "There was an error deleting the record: #{e.message}"
+          flasha[:error] = "There was an error deleting the record: #{e.message}"
         end
       end
 
       respond_to do |page|
-        page.html { redirect_to action: :data, table_id: params[:table_id] }
+        page.html { redirect_to action: :data, table_id: params[:table_id], flash: flasha }
         page.js {}
       end
     end
@@ -89,16 +93,18 @@ module RailsDb
     def update
       @record = @table.as_model.find(params[:pk_id])
 
+      flasha = {}
+
       unless RailsDb.sandbox
         if @record.update(record_attributes)
-          flash[:success] = 'Record has been updated successfully.'
+          flasha[:success] = 'Record has been updated successfully.'
         else
-          flash[:error] = 'There was an error updating the record.'
+          flasha[:error] = 'There was an error updating the record.'
         end
       end
 
       respond_to do |page|
-        page.html { redirect_to action: :data, table_id: params[:table_id] }
+        page.html { redirect_to action: :data, table_id: params[:table_id], flash: flasha }
         page.js {}
       end
     end
