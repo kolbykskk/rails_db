@@ -17,6 +17,9 @@
           <% options[:input_html][:rows] = 4 %>
           <% options[:input_html][:cols] = 80 %>
         <% end %>
+        <% if column.type.to_s =~ /password/ %>
+          <% options[:value] = @record[column] %>
+        <% end %>
 
         <%= form.input name, options %>
       <% end %>
