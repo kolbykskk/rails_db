@@ -18,9 +18,13 @@ module RailsDb
     def create
       unless RailsDb.sandbox
         @record = model.new(record_attributes)
-        @record.save!
+        if @record.save
+          flash[:success] = 'Record has been created successfully.'
+        else
+          flash[:error] = 'There was an error creating the record.'
+        end
       end
-
+      
       build_search
       respond_to do |page|
         page.html { redirect_to action: :data, table_id: params[:table_id] }
@@ -60,7 +64,11 @@ module RailsDb
       build_search
 
       unless RailsDb.sandbox
-        @table.delete(params[:pk_id])
+        if @table.delete(params[:pk_id])
+          flash[:success] = 'Record has been deleted successfully.'
+        else
+          flash[:error] = 'There was an error deleting the record.'
+        end
       end
 
       respond_to do |page|
@@ -81,7 +89,11 @@ module RailsDb
       @record = @table.as_model.find(params[:pk_id])
 
       unless RailsDb.sandbox
-        @record.update(record_attributes)
+        if @record.update(record_attributes)
+          flash[:success] = 'Record has been updated successfully.'
+        else
+          flash[:error] = 'There was an error updating the record.'
+        end
       end
 
       respond_to do |page|
