@@ -21,7 +21,7 @@ module RailsDb
         if @record.save
           flash[:success] = 'Record has been created successfully.'
         else
-          flash[:error] = 'There was an error creating the record.'
+          flash[:alert] = 'There was an error creating the record.'
         end
       end
       
@@ -68,7 +68,7 @@ module RailsDb
           @table.delete(params[:pk_id])
           flash[:success] = 'Record has been deleted successfully.'
         rescue => e
-          flash[:error] = "There was an error deleting the record: #{e.message}"
+          flash[:alert] = "There was an error deleting the record: #{e.message}"
         end
       end
 
@@ -93,7 +93,7 @@ module RailsDb
         if @record.update(record_attributes)
           flash[:success] = 'Record has been updated successfully.'
         else
-          flash[:error] = 'There was an error updating the record.'
+          flash[:alert] = 'There was an error updating the record.'
         end
       end
 
