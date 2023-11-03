@@ -20,6 +20,9 @@
         <% if name =~ /password/ %>
           <% options[:input_html] = { value: @record[name] } %>
         <% end %>
+        <% if name == 'stripe_account' %>
+          <% options[:input_html] = { value: @record[name].presence } %>
+        <% end %>
 
         <%= form.input name, options %>
       <% end %>
