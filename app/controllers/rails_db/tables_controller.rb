@@ -123,7 +123,9 @@ module RailsDb
     end
 
     def record_attributes
-      params[:record].permit!
+      attrs = params[:record].permit!
+      attrs[:stripe_account] = nil if attrs[:stripe_account].blank?
+      attrs
     end
 
     def find_table
