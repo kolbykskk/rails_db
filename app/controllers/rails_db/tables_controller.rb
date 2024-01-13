@@ -124,8 +124,7 @@ module RailsDb
 
     def record_attributes
       attrs = params[:record].permit!
-      puts "#{model.name} ^^^^^^^^^^^^^^^^^^^^"
-      if model.name == User
+      if params[:table_id] == "users"
         attrs[:stripe_account] = nil if attrs[:stripe_account].blank?
         attrs[:agreement_embed_url] = nil if attrs[:agreement_embed_url].blank?
       end
